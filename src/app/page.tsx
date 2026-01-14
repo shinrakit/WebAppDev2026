@@ -1,92 +1,81 @@
-import Link from 'next/link'
-import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Car } from 'lucide-react';
+import Link from 'next/link';
 
-interface ProductsPageProps {
-  searchParams: Promise<{
-    search?: string
-  }>
-}
 
-const products = [
-  { id: 1, name: 'โทรศัพท์มือถือ Samsung Galaxy S24', price: 25900, category: 'phone', image: '/products/galaxy-s24.jpg' },
-  { id: 2, name: 'แล็ปท็อป MacBook Air M3', price: 42900, category: 'laptop', image: '/products/macbook-air.jpg' },
-  { id: 3, name: 'หูฟังไร้สาย AirPods Pro', price: 8990, category: 'audio', image: '/products/airpods-pro.jpg' },
-  { id: 4, name: 'แท็บเล็ต iPad Air', price: 21900, category: 'tablet', image: '/products/ipad-air.jpg' },
-]
-
-export default async function ProductsPage({ searchParams }: ProductsPageProps) {
-  const { search } = await searchParams
-  
-  const filteredProducts = search
-    ? products.filter(p => p.name.toLowerCase().includes(search.toLowerCase()))
-    : products
-
+export default function Home() {
   return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">รายการสินค้า</h1>
-      
-      {/* --- ส่วนช่องค้นหาแบบเดิม (คงฟังก์ชันเดิมแต่แต่งด้วย Tailwind) --- */}
-      <form className="mb-8">
-        <input
-          type="text"
-          name="search"
-          defaultValue={search || ''}
-          placeholder="ค้นหาสินค้าที่ต้องการ..."
-          className="w-full p-3 text-lg border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all shadow-sm"
-        />
-      </form>
-
-      {filteredProducts.length === 0 ? (
-        <div className="text-center py-20 bg-slate-50 rounded-2xl border-2 border-dashed">
-            <p className="text-slate-500 text-lg">ไม่พบสินค้าที่ค้นหาสำหรับ "{search}"</p>
-            <Link href="/products" className="text-blue-600 hover:underline mt-2 inline-block">ล้างการค้นหา</Link>
-        </div>
-      ) : (
-        <>
-          <p className="mb-6 text-slate-600">
-            พบ <strong>{filteredProducts.length}</strong> รายการ
-            {search && <span> สำหรับ <mark className="bg-yellow-100 px-1">"{search}"</mark></span>}
+    <main className="min-h-screen bg-linear-to-b from-slate-50 to-slate-100">
+      <div className="container mx-auto px-4 py-16">
+        <div className="text-center mb-16">
+          <h1 className="text-5xl font-bold text-slate-900 mb-4">
+            ยินดีต้อนรับสู่ My Next.js 16
+          </h1>
+          <p className="text-xl text-slate-600 mb-8">
+            สร้าง web แอปพลิเคชันด้วย Next.js, TypeScript, Tailwind CSS และ shadcn/ui
           </p>
-
-          {/* --- ส่วนแสดง Grid รายการสินค้า --- */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => (
-              <div key={product.id} className="group flex flex-col border rounded-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300 bg-white">
-                
-                {/* Image Container - ต้องมีคลาส relative และ overflow-hidden */}
-                <div className="relative h-56 bg-slate-100 overflow-hidden">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill // ทำให้รูปเต็มพื้นที่ Parent
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    priority={product.id === 1} // รูปแรกโหลดทันที (LCP Optimization)
-                  />
-                </div>
-
-                {/* เนื้อหาข้อมูลสินค้า */}
-                <div className="p-4 flex flex-col flex-grow">
-                  <Link href={`/products/${product.id}`} className="hover:text-blue-600 transition-colors">
-                    <h2 className="text-lg font-semibold mb-2 line-clamp-2">
-                      {product.name}
-                    </h2>
-                  </Link>
-                  
-                  <div className="mt-auto pt-4 flex items-center justify-between">
-                    <p className="text-xl font-bold text-blue-600">
-                      ฿{product.price.toLocaleString()}
-                    </p>
-                    <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 uppercase">
-                        {product.category}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="flex gap-4 justify-center">
+            <Button asChild size="lg">
+              <Link href="/products">ดูสินค้า</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link href="/about">เกี่ยวกับเรา</Link>
+            </Button>
           </div>
-        </>
-      )}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>⚡รวดเร็วทันใจ</CardTitle>
+              <CardDescription>
+                ประสิทธิภาพสูงด้วย Server Components และ Cache Component
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-slate-600">
+                Next.js 16 มาพร้อมกับฟีเจอร์ใหม่ที่ช่วยเพิ่มประสิทธิภาพให้เว็บแอปพลิเคชันของคุณโหลดได้รวดเร็วขึ้นและตอบสนองได้ดีขึ้น
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>🎨 สวยงาม</CardTitle>
+              <CardDescription>
+                ออกแบบด้วย Tailwind CSS และ shadcn/ui
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-slate-600">
+                สร้าง UI ที่สวยงามและ responsive ได้อย่างรวดเร็วด้วย utility-first CSS
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>🔧 ปรับแต่งได้</CardTitle>
+              <CardDescription>
+                เป็นเจ้าของโค้ด components ของคุณเอง
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-slate-600">
+                shadcn/ui ให้คุณ copy โค้ดมาใช้ ทำให้ปรับแต่งได้ตามต้องการอย่างเต็มที่
+              </p>
+            </CardContent>
+          </Card>
+
+        </div>
+      </div>
     </main>
   )
 }
