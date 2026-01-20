@@ -4,6 +4,7 @@ import Link from 'next/link'
 import './globals.css'
 import { Separator } from "@/components/ui/separator"
 
+
 // *** ส่วนที่ 1: การจัดการ Fonts (Google Fonts Optimization) ***
 //
 export const prompt = Prompt({
