@@ -2,7 +2,7 @@
 import Link from 'next/link' // สำหรับการนำทางระหว่างหน้า
 import Image from 'next/image'; // Component รูปภาพที่ปรับขนาดอัตโนมัติ
 import { Metadata } from "next" // Type สำหรับ SEO metadata
-import ProductSearch from '@/components/product-search' // นำเข้า Client Component สำหรับค้นหา
+import ProductSearch from '@/app/components/product-search' // นำเข้า Client Component สำหรับค้นหา
 
 // Static Metadata สำหรับหน้ารายการสินค้า
 export const metadata: Metadata = {
@@ -71,7 +71,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       <h1 className="text-3xl font-bold mb-6">รายการสินค้า</h1>
       
       {/* Component สำหรับค้นหาสินค้า (Client Component) */}
-      <ProductSearch initialQuery={search || ''} key={search} />
+      <ProductSearch initialQuery={search || ''} />
 
       {/* แสดงผลตามจำนวนสินค้าที่พบ */}
       {filteredProducts.length === 0 ? (

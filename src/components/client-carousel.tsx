@@ -1,6 +1,12 @@
-'use client' // 1. ประกาศว่าเป็น Client Component
+// app/page.tsx (Server Component โดย Default)
+import MyCarousel from './components/client-carousel'
 
-import { Carousel } from 'acme-carousel' // 2. นำเข้าไลบรารีเจ้าปัญหา
-
-// 3. ส่งออกไปใช้งานต่อในฐานะ Client Component
-export default Carousel
+export default function Page() {
+  return (
+    <div>
+      <h1>หน้าแรกของฉัน</h1>
+      {/* ใช้งานได้ทันที ไม่เกิด Error บน Server */}
+      <MyCarousel /> 
+    </div>
+  )
+}
