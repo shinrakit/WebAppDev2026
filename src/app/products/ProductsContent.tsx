@@ -1,18 +1,6 @@
-import { Suspense } from "react";
-import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import ProductSearch from "@/components/product-search";
-
-// Static Metadata สำหรับหน้ารายการสินค้า
-export const metadata: Metadata = {
-  title: "รายการสินค้า",
-  description: "ดูสินค้าทั้งหมดในร้านค้า พร้อมฟีเจอร์ค้นหา",
-  openGraph: {
-    title: "รายการสินค้า | My Next.js App",
-    description: "ค้นหาและเลือกซื้อสินค้าที่คุณต้องการ",
-  },
-};
 
 interface Product {
   id: number;
@@ -75,7 +63,11 @@ const products: Product[] = [
   },
 ];
 
-async function ProductsList({ searchParams }: { searchParams: Promise<{ search?: string }> }) {
+type ProductsContentProps = {
+  searchParams?: Promise<{ search?: string }>;
+};
+
+export async function ProductsContent({ searchParams }: ProductsContentProps) {
   const params = (await searchParams) ?? {};
   const search = params.search?.trim() ?? "";
 
@@ -84,7 +76,9 @@ async function ProductsList({ searchParams }: { searchParams: Promise<{ search?:
     : products;
 
   return (
-    <>
+    <main className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6">รายการสินค้า</h1>
+
       <ProductSearch initialQuery={search} />
 
       {filteredProducts.length === 0 ? (
@@ -145,28 +139,6 @@ async function ProductsList({ searchParams }: { searchParams: Promise<{ search?:
           </div>
         </>
       )}
-    </>
-  );
-}
-
-interface ProductsPageProps {
-  searchParams: Promise<{
-    search?: string;
-  }>;
-}
-
-export default function ProductsPage({ searchParams }: ProductsPageProps) {
-  return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">รายการสินค้า</h1>
-
-      <Suspense
-        fallback={
-          <div className="text-slate-500">กำลังโหลดรายการสินค้า...</div>
-        }
-      >
-        <ProductsList searchParams={searchParams} />
-      </Suspense>
     </main>
   );
 }
