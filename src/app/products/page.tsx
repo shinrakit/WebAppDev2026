@@ -47,7 +47,8 @@ const products: Product[] = [
  */
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
   // รอรับค่า searchParams (เป็น Promise ใน Next.js 15+)
-  const { search } = await searchParams
+  const params = await searchParams
+  const search = params.search
   
   // กรองสินค้าตามคำค้นหา (ถ้ามี)
   // - ถ้ามีคำค้นหา: กรองเฉพาะสินค้าที่ชื่อตรงกับคำค้นหา (ไม่สนพิมพ์ใหญ่-เล็ก)
