@@ -11,8 +11,7 @@ interface AddToCartButtonProps {
 
 export default function AddToCartButton({ 
   productId, 
-  productName, 
-  productPrice 
+  productName
 }: AddToCartButtonProps) {
   // สร้าง State สำหรับเก็บจำนวนสินค้า (Interactivity)
   const [quantity, setQuantity] = useState(1)

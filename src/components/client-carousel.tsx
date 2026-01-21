@@ -1,5 +1,5 @@
 // app/page.tsx (Server Component โดย Default)
-import MyCarousel from './components/client-carousel'
+import MyCarousel from './client-carousel'
 
 export default function Page() {
   return (

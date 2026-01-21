@@ -1,19 +1,17 @@
 'use client' // บอกว่าเป็น Client Component เพราะมีการใช้ Hook และ Event
 
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
-export default function ProductSearch({ initialQuery = '' }) {
+interface ProductSearchProps {
+  initialQuery?: string
+}
+
+export default function ProductSearch({ initialQuery = '' }: ProductSearchProps) {
   const router = useRouter()
-  const searchParams = useSearchParams()
   
   // สร้าง State เพื่อเก็บสิ่งที่ User พิมพ์
   const [query, setQuery] = useState(initialQuery)
-
-  // ดักจับเวลา URL เปลี่ยน (เช่น กด Back/Forward) ให้ตัวหนังสือในช่องค้นหาเปลี่ยนตาม
-  useEffect(() => {
-    setQuery(searchParams.get('search') || '')
-  }, [searchParams])
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

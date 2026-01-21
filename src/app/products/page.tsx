@@ -2,7 +2,7 @@
 import Link from 'next/link' // สำหรับการนำทางระหว่างหน้า
 import Image from 'next/image'; // Component รูปภาพที่ปรับขนาดอัตโนมัติ
 import { Metadata } from "next" // Type สำหรับ SEO metadata
-import ProductSearch from '@/app/components/product-search' // นำเข้า Client Component สำหรับค้นหา
+import ProductSearch from '@/components/product-search' // นำเข้า Client Component สำหรับค้นหา
 
 // Static Metadata สำหรับหน้ารายการสินค้า
 export const metadata: Metadata = {
@@ -42,15 +42,6 @@ const products: Product[] = [
 ];
 
 /**
- * ค้นหาสินค้าจาก ID
- * @param id - รหัสสินค้าที่ต้องการค้นหา
- * @returns สินค้าที่พบ หรือ undefined ถ้าไม่พบ
- */
-function getProductById(id: number): Product | undefined {
-  return products.find(product => product.id === id);
-}
-
-/**
  * หน้ารายการสินค้าทั้งหมด พร้อมฟีเจอร์ค้นหา
  * เป็น Server Component (รันบน Server)
  */
@@ -77,7 +68,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       {filteredProducts.length === 0 ? (
         // กรณีไม่พบสินค้า: แสดงข้อความและปุ่มล้างค่า
         <div className="text-center py-20 bg-slate-50 rounded-2xl border-2 border-dashed">
-            <p className="text-slate-500 text-lg">ไม่พบสินค้าที่ค้นหาสำหรับ "{search}"</p>
+            <p className="text-slate-500 text-lg">ไม่พบสินค้าที่ค้นหาสำหรับ &quot;{search}&quot;</p>
             <Link href="/products" className="text-blue-600 hover:underline mt-2 inline-block">ล้างการค้นหา</Link>
         </div>
       ) : (
@@ -85,7 +76,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           {/* แสดงจำนวนสินค้าที่พบ */}
           <p className="mb-6 text-slate-600">
             พบ <strong>{filteredProducts.length}</strong> รายการ
-            {search && <span> สำหรับ <mark className="bg-yellow-100 px-1">"{search}"</mark></span>}
+            {search && <span> สำหรับ <mark className="bg-yellow-100 px-1">&quot;{search}&quot;</mark></span>}
           </p>
 
           {/* Grid Layout แบบ Responsive สำหรับแสดงสินค้า */}
@@ -109,7 +100,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                 </div>
 
                 {/* ส่วนข้อมูลสินค้า (ชื่อ, ราคา, หมวดหมู่) */}
-                <div className="p-4 flex flex-col flex-grow">
+                <div className="p-4 flex flex-col grow">
                   {/* ชื่อสินค้า - คลิกได้ไปหน้ารายละเอียด */}
                   <Link href={`/products/${product.id}`} className="hover:text-blue-600 transition-colors">
                     <h2 className="text-lg font-semibold mb-2 line-clamp-2"> {/* line-clamp-2 = แสดงแค่ 2 บรรทัด */}
